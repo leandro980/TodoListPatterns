@@ -1,0 +1,17 @@
+{
+    "name": "leandro/todo-list-patterns",
+    "description": "Design patterns exercise",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "TodoListPatterns\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leandro Luccerini",
+            "email": "leandro.luccerini@gmail.com"
+        }
+    ],
+    "require": {}
+}
