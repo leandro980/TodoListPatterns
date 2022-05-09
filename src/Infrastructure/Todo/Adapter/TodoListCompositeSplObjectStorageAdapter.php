@@ -12,8 +12,7 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     private SplObjectStorage $children;
 
     public function __construct(protected readonly string $text,
-                                private   readonly TodoListFormatStrategyInterface $formatStrategy,
-                                private   readonly ?AbstractTodoListComponent $parent)
+                                private   readonly TodoListFormatStrategyInterface $formatStrategy)
     {
         $this->children = new SplObjectStorage();
     }
@@ -58,14 +57,6 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     {
         $this->children->detach($component);
         return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getParent(): ?AbstractTodoListComponent
-    {
-        return $this->parent;
     }
 
     /**

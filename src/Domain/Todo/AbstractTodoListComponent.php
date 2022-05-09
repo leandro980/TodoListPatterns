@@ -48,13 +48,6 @@ abstract class AbstractTodoListComponent
     abstract public function getChildren(): SplObjectStorage;
 
     /**
-     * Gets the parent of the node
-     *
-     * @return AbstractTodoListComponent|null
-     */
-    abstract public function getParent(): ?AbstractTodoListComponent;
-
-    /**
      * See "Design Patterns - Elements of reusable object-oriented software" pag. 167 point 4
      * Declaring the child Management Operations, safety vs transparency.
      * The Gof prefers transparency.

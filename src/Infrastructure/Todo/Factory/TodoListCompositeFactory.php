@@ -32,14 +32,14 @@ class TodoListCompositeFactory implements TodoListCompositeFactoryInterface
     public function createComposite(array $list, ?AbstractTodoListComponent $parent = null): AbstractTodoListComponent
     {
         if (!$parent) {
-            $parent = new TodoListCompositeSplObjectStorageAdapter("", $this->strategy, null);
+            $parent = new TodoListCompositeSplObjectStorageAdapter("", $this->strategy);
         }
 
         foreach ($list as $element => $children) {
             if (count($children) === 0) {
-                $todo = new TodoListLeaf($element, $this->strategy, $parent);
+                $todo = new TodoListLeaf($element, $this->strategy);
             } else {
-                $todo = new TodoListCompositeSplObjectStorageAdapter($element, $this->strategy, $parent);
+                $todo = new TodoListCompositeSplObjectStorageAdapter($element, $this->strategy);
             }
             $parent->add($todo);
 

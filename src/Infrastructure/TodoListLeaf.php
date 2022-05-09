@@ -10,8 +10,7 @@ class TodoListLeaf extends AbstractTodoListComponent
 {
 
     public function __construct(private readonly string $text,
-                                private readonly TodoListFormatStrategyInterface $formatStrategy,
-                                private readonly ?AbstractTodoListComponent $parent)
+                                private readonly TodoListFormatStrategyInterface $formatStrategy)
     {
 
     }
@@ -29,11 +28,6 @@ class TodoListLeaf extends AbstractTodoListComponent
     public function getChildren(): SplObjectStorage
     {
         return new SplObjectStorage();
-    }
-
-    public function getParent(): ?AbstractTodoListComponent
-    {
-        return $this->parent;
     }
 
     public function getStringRepresentation(): string
