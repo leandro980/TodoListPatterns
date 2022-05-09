@@ -5,7 +5,7 @@ namespace TodoListPatterns\Infrastructure\Todo\Strategy;
 use TodoListPatterns\Domain\Todo\AbstractTodoListComponent;
 use TodoListPatterns\Domain\Todo\Strategy\TodoListFormatStrategyInterface;
 
-class HtmlUlTodoListFormatStrategy implements TodoListFormatStrategyInterface
+class HtmlOlTodoListFormatStrategy implements TodoListFormatStrategyInterface
 {
 
     public function startList(AbstractTodoListComponent $component): string
@@ -17,7 +17,7 @@ class HtmlUlTodoListFormatStrategy implements TodoListFormatStrategyInterface
         }
 
         if (count($component->getChildren()) > 0) {
-            $output .= "<ul>";
+            $output .= "<ol>";
         }
 
         return $output;
@@ -27,7 +27,7 @@ class HtmlUlTodoListFormatStrategy implements TodoListFormatStrategyInterface
     {
 
         if (count($component->getChildren()) > 0) {
-            $list .= "</ul>";
+            $list .= "</ol>";
         }
 
         if (!empty($component->getNodeText())) {

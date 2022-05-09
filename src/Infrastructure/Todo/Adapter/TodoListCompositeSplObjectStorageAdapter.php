@@ -2,7 +2,6 @@
 
 namespace TodoListPatterns\Infrastructure\Todo\Adapter;
 
-use Iterator;
 use SplObjectStorage;
 use TodoListPatterns\Domain\Todo\AbstractTodoListComponent;
 use TodoListPatterns\Domain\Todo\Strategy\TodoListFormatStrategyInterface;
@@ -13,8 +12,8 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     private SplObjectStorage $children;
 
     public function __construct(protected readonly string $text,
-                                private readonly TodoListFormatStrategyInterface $formatStrategy,
-                                private readonly ?AbstractTodoListComponent $parent)
+                                private   readonly TodoListFormatStrategyInterface $formatStrategy,
+                                private   readonly ?AbstractTodoListComponent $parent)
     {
         $this->children = new SplObjectStorage();
     }
@@ -24,7 +23,15 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
      */
     public function getStringRepresentation(): string
     {
-        return $this->formatStrategy->format($this);
+
+        $list = $this->formatStrategy->startList($this);
+
+        /** @var AbstractTodoListComponent $child */
+        foreach ($this->getChildren() as $child) {
+            $list .= $child->getStringRepresentation();
+        }
+
+        return $this->formatStrategy->endList($this, $list);
     }
 
     /**
@@ -41,6 +48,7 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     public function add(AbstractTodoListComponent $component): AbstractTodoListComponent
     {
         $this->children->attach($component);
+        return $this;
     }
 
     /**
@@ -49,6 +57,7 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     public function remove(AbstractTodoListComponent $component): AbstractTodoListComponent
     {
         $this->children->detach($component);
+        return $this;
     }
 
     /**
@@ -62,10 +71,14 @@ class TodoListCompositeSplObjectStorageAdapter extends AbstractTodoListComponent
     /**
      * @inheritDoc
      */
-    public function getChildren(): Iterator
+    public function getChildren(): SplObjectStorage
     {
         return $this->children;
     }
 
+    public function getComposite(): ?AbstractTodoListComponent
+    {
+        return $this;
+    }
 
 }

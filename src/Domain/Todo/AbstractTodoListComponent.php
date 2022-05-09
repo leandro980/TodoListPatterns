@@ -2,7 +2,7 @@
 
 namespace TodoListPatterns\Domain\Todo;
 
-use Iterator;
+use SplObjectStorage;
 
 abstract class AbstractTodoListComponent
 {
@@ -43,9 +43,9 @@ abstract class AbstractTodoListComponent
     /**
      * Gets the children of the composite
      *
-     * @return Iterator
+     * @return SplObjectStorage
      */
-    abstract public function getChildren(): Iterator;
+    abstract public function getChildren(): SplObjectStorage;
 
     /**
      * Gets the parent of the node

@@ -2,14 +2,16 @@
 
 namespace TodoListPatterns\Infrastructure;
 
-use EmptyIterator;
-use Iterator;
+use SplObjectStorage;
 use TodoListPatterns\Domain\Todo\AbstractTodoListComponent;
+use TodoListPatterns\Domain\Todo\Strategy\TodoListFormatStrategyInterface;
 
 class TodoListLeaf extends AbstractTodoListComponent
 {
 
-    public function __construct(private readonly string $text, private readonly ?AbstractTodoListComponent $parent)
+    public function __construct(private readonly string $text,
+                                private readonly TodoListFormatStrategyInterface $formatStrategy,
+                                private readonly ?AbstractTodoListComponent $parent)
     {
 
     }
@@ -24,9 +26,9 @@ class TodoListLeaf extends AbstractTodoListComponent
         return $this;
     }
 
-    public function getChildren(): Iterator
+    public function getChildren(): SplObjectStorage
     {
-        return new EmptyIterator();
+        return new SplObjectStorage();
     }
 
     public function getParent(): ?AbstractTodoListComponent
@@ -35,6 +37,12 @@ class TodoListLeaf extends AbstractTodoListComponent
     }
 
     public function getStringRepresentation(): string
+    {
+        $list = $this->formatStrategy->startList($this);
+        return $this->formatStrategy->endList($this, $list);
+    }
+
+    public function getNodeText(): string
     {
         return $this->text;
     }
